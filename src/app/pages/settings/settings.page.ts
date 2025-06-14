@@ -162,8 +162,8 @@ export class SettingsPage implements OnInit {
 
   emergencyContacts: EmergencyContact[] = [
     {
-      name: 'Familia - María',
-      phone: '+56 9 8765 4321'
+      name: 'Familia - Erik',
+      phone: '+56 9 5419 8768'
     },
     {
       name: 'Trabajo - Seguridad',
