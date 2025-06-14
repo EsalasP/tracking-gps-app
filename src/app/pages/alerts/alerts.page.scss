@@ -1,0 +1,286 @@
+ion-content {
+  --background: #f5f5f5;
+}
+
+// Cards generales
+ion-card {
+  margin: 8px 0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+// Resumen de alertas
+.alert-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 8px;
+  
+  .count-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 18px;
+    color: white;
+    
+    &.critical {
+      background: linear-gradient(135deg, #dc3545, #c82333);
+      box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+    }
+    
+    &.warning {
+      background: linear-gradient(135deg, #ffc107, #e0a800);
+      box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+      color: #333;
+    }
+    
+    &.info {
+      background: linear-gradient(135deg, #007bff, #0056b3);
+      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    }
+  }
+  
+  p {
+    margin: 0;
+    font-size: 12px;
+    color: #666;
+    font-weight: 500;
+  }
+}
+
+// Segmentos de filtro
+ion-segment {
+  --background: #f8f9fa;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+ion-segment-button {
+  --color: #666;
+  --color-checked: #007bff;
+  --background-checked: white;
+  --border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  min-height: 36px;
+}
+
+// Lista de alertas
+ion-list {
+  background: transparent;
+  padding: 0;
+}
+
+ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --background: transparent;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+  
+  &.unread {
+    --background: #f8f9ff;
+    border-left: 4px solid #007bff;
+    padding-left: 12px;
+  }
+  
+  &:hover {
+    --background: #f5f5f5;
+  }
+  
+  ion-label {
+    h3 {
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #333;
+      font-size: 14px;
+    }
+    
+    p {
+      color: #666;
+      font-size: 12px;
+      margin: 2px 0;
+      line-height: 1.4;
+    }
+    
+    .alert-time {
+      color: #999;
+      font-size: 11px;
+      font-style: italic;
+      margin-top: 4px;
+    }
+  }
+  
+  ion-icon {
+    font-size: 20px;
+    margin-right: 8px;
+  }
+}
+
+.alert-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  
+  ion-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 4px 8px;
+  }
+  
+  .unread-indicator {
+    font-size: 8px;
+    animation: pulse 2s infinite;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+// Estado vacío
+.no-alerts {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+  
+  ion-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+  }
+  
+  h3 {
+    margin: 8px 0 4px 0;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  p {
+    margin: 0;
+    font-size: 14px;
+    opacity: 0.7;
+  }
+}
+
+// Configuración de notificaciones
+ion-checkbox {
+  --size: 20px;
+  --border-radius: 4px;
+  --border-width: 2px;
+  --border-color: #ddd;
+  --background-checked: #007bff;
+  --border-color-checked: #007bff;
+  margin-right: 12px;
+}
+
+// Cards específicos
+ion-card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+ion-card-subtitle {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+}
+
+// Botones
+ion-button {
+  --border-radius: 8px;
+  font-weight: 500;
+  text-transform: none;
+  
+  &[expand="block"] {
+    margin: 16px 0 0 0;
+  }
+}
+
+// Toolbar
+ion-toolbar {
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+// Responsive design
+@media (min-width: 768px) {
+  ion-card {
+    margin: 16px 0;
+  }
+  
+  .alert-summary {
+    padding: 16px;
+    
+    .count-circle {
+      width: 60px;
+      height: 60px;
+      font-size: 20px;
+    }
+    
+    p {
+      font-size: 14px;
+    }
+  }
+  
+  ion-item {
+    padding: 12px 0;
+    
+    ion-label h3 {
+      font-size: 16px;
+    }
+    
+    ion-label p {
+      font-size: 14px;
+    }
+  }
+}
+
+// Estados de alertas específicos
+.alert-item-critical {
+  border-left-color: #dc3545 !important;
+}
+
+.alert-item-warning {
+  border-left-color: #ffc107 !important;
+}
+
+.alert-item-info {
+  border-left-color: #007bff !important;
+}
+
+// Animaciones para nuevas alertas
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.new-alert {
+  animation: slideInRight 0.3s ease-out;
+}

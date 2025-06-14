@@ -1,0 +1,273 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Seguimiento GPS</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="toggleTracking()">
+        <ion-icon [name]="isTracking ? 'pause' : 'play'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+<!-- Mapa Real con Leaflet -->
+<div class="map-container">
+  <div id="map" class="real-map" *ngIf="currentPosition; else mapPlaceholder">
+    <!-- El mapa se renderizará aquí -->
+  </div>
+  
+  <!-- Placeholder mientras se carga GPS -->
+  <ng-template #mapPlaceholder>
+    <div class="map-placeholder">
+      <ion-icon name="map" color="primary"></ion-icon>
+      <h3>Inicializando GPS</h3>
+      <p>{{ isTracking ? 'Obteniendo ubicación...' : 'Presiona play para iniciar' }}</p>
+      <div class="loading-spinner" *ngIf="isTracking">
+        <ion-icon name="refresh" class="spinning"></ion-icon>
+      </div>
+    </div>
+  </ng-template>
+  
+  <!-- Controles superpuestos en el mapa -->
+  <div class="map-controls-overlay" *ngIf="currentPosition">
+    <ion-button 
+      fill="clear" 
+      color="light" 
+      (click)="centerMapOnVehicle()"
+      class="map-control-btn">
+      <ion-icon name="locate"></ion-icon>
+    </ion-button>
+    
+    <ion-button 
+      fill="clear" 
+      color="light" 
+      (click)="toggleMapLayer()"
+      class="map-control-btn">
+      <ion-icon name="layers"></ion-icon>
+    </ion-button>
+  </div>
+
+  <!-- Información GPS superpuesta -->
+  <div class="coordinates-overlay" *ngIf="currentPosition">
+    <p>{{ currentPosition.latitude.toFixed(6) }}°N</p>
+    <p>{{ currentPosition.longitude.toFixed(6) }}°W</p>
+    <p class="accuracy">±{{ accuracy }}m</p>
+    <p class="status" [class]="isTracking ? 'tracking' : 'paused'">
+      {{ isTracking ? 'EN VIVO' : 'PAUSADO' }}
+    </p>
+  </div>
+</div>
+
+  <!-- Información de Ubicación Real -->
+  <ion-card class="location-info">
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <div class="info-header">
+              <ion-icon name="location" color="primary"></ion-icon>
+              <div>
+                <h3>{{ currentLocation }}</h3>
+                <p>Última actualización: {{ lastUpdate }}</p>
+                <p class="gps-info" *ngIf="currentPosition">
+                  Precisión: ±{{ accuracy }}m
+                </p>
+              </div>
+              <ion-badge [color]="isTracking ? 'success' : 'medium'">
+                {{ isTracking ? 'GPS Activo' : 'GPS Pausado' }}
+              </ion-badge>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4">
+            <div class="stat-item">
+              <ion-icon name="speedometer" color="primary"></ion-icon>
+              <div>
+                <h4>{{ currentSpeed }} km/h</h4>
+                <p>Velocidad GPS</p>
+              </div>
+            </div>
+          </ion-col>
+          <ion-col size="4">
+            <div class="stat-item">
+              <ion-icon name="trail-sign" color="warning"></ion-icon>
+              <div>
+                <h4>{{ distanceTraveled }} km</h4>
+                <p>Recorrido</p>
+              </div>
+            </div>
+          </ion-col>
+          <ion-col size="4">
+            <div class="stat-item">
+              <ion-icon name="time" color="success"></ion-icon>
+              <div>
+                <h4>{{ travelTime }}</h4>
+                <p>Tiempo</p>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Controles de GPS -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Controles GPS</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <ion-button expand="block" fill="outline" (click)="getCurrentLocation()">
+              <ion-icon name="refresh" slot="start"></ion-icon>
+              Actualizar
+            </ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button expand="block" fill="outline" (click)="centerMap()">
+              <ion-icon name="locate" slot="start"></ion-icon>
+              Centrar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <ion-button expand="block" fill="outline" (click)="shareLocation()">
+              <ion-icon name="share" slot="start"></ion-icon>
+              Compartir
+            </ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button expand="block" fill="outline" (click)="viewHistory()">
+              <ion-icon name="archive" slot="start"></ion-icon>
+              Historial
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Estado del GPS -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Estado del GPS</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-icon 
+            [name]="currentPosition ? 'checkmark-circle' : 'close-circle'" 
+            [color]="currentPosition ? 'success' : 'danger'" 
+            slot="start">
+          </ion-icon>
+          <ion-label>
+            <h3>Señal GPS</h3>
+            <p>{{ currentPosition ? 'Conectado' : 'Desconectado' }}</p>
+          </ion-label>
+          <ion-badge 
+            [color]="currentPosition ? 'success' : 'danger'" 
+            slot="end">
+            {{ currentPosition ? 'OK' : 'ERROR' }}
+          </ion-badge>
+        </ion-item>
+        
+        <ion-item *ngIf="currentPosition">
+          <ion-icon name="location" color="primary" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Precisión GPS</h3>
+            <p>{{ accuracy }} metros</p>
+          </ion-label>
+          <ion-badge 
+            [color]="accuracy < 10 ? 'success' : accuracy < 50 ? 'warning' : 'danger'" 
+            slot="end">
+            {{ accuracy < 10 ? 'Excelente' : accuracy < 50 ? 'Buena' : 'Regular' }}
+          </ion-badge>
+        </ion-item>
+        
+        <ion-item>
+          <ion-icon name="time" color="medium" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Tiempo de seguimiento</h3>
+            <p>{{ travelTime }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Zonas de Seguridad con gestión real -->
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Zonas de Seguridad</ion-card-title>
+    <ion-card-subtitle>Geofencing GPS en tiempo real</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list>
+      <ion-item *ngFor="let zone of geofenceZones">
+        <ion-icon 
+          [name]="zone.name === 'Casa' ? 'home' : zone.name === 'Trabajo' ? 'business' : 'location'" 
+          [color]="zone.enabled ? 'success' : 'medium'" 
+          slot="start">
+        </ion-icon>
+        <ion-label>
+          <h3>{{ zone.name }}</h3>
+          <p>Radio: {{ (zone.radius * 1000).toFixed(0) }}m - {{ zone.enabled ? 'Activa' : 'Inactiva' }}</p>
+        </ion-label>
+        <ion-badge 
+          [color]="zone.enabled ? 'success' : 'medium'" 
+          slot="end">
+          {{ zone.enabled ? 'ON' : 'OFF' }}
+        </ion-badge>
+      </ion-item>
+    </ion-list>
+    
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-button expand="block" (click)="manageZones()">
+            <ion-icon name="settings" slot="start"></ion-icon>
+            Gestionar Zonas GPS
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-button expand="block" fill="outline" (click)="addNewZone()">
+            <ion-icon name="add-circle" slot="start"></ion-icon>
+            Nueva Zona
+          </ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button expand="block" fill="outline" (click)="showZonesList()">
+            <ion-icon name="list" slot="start"></ion-icon>
+            Ver Zonas
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>
+
+<!-- Toast para notificaciones -->
+  <ion-toast
+    [isOpen]="isToastOpen"
+    [message]="toastMessage"
+    [duration]="3000"
+    [color]="toastColor"
+    position="bottom"
+    (didDismiss)="setToastOpen(false)">
+  </ion-toast>
+
+  <!-- Alert para gestión de zonas GPS -->
+  <ion-alert
+    [isOpen]="isZoneAlertOpen"
+    [header]="zoneAlertHeader"
+    [message]="zoneAlertMessage"
+    [buttons]="zoneAlertButtons"
+    (didDismiss)="setZoneAlertOpen(false)">
+  </ion-alert>
+</ion-content>

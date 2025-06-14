@@ -1,0 +1,386 @@
+ion-content {
+  --background: #f5f5f5;
+}
+
+// Cards generales
+ion-card {
+  margin: 8px 0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+// Títulos de cards con íconos
+ion-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  
+  ion-icon {
+    font-size: 20px;
+  }
+}
+
+// Lista de elementos
+ion-list {
+  background: transparent;
+  padding: 0;
+}
+
+ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --background: transparent;
+  margin-bottom: 4px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease-in-out;
+  
+  &:hover {
+    --background: #f8f9fa;
+  }
+  
+  ion-label {
+    h3 {
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #333;
+      font-size: 14px;
+    }
+    
+    p {
+      color: #666;
+      font-size: 12px;
+      margin: 2px 0;
+      line-height: 1.4;
+    }
+  }
+  
+  ion-icon {
+    font-size: 20px;
+    margin-right: 8px;
+  }
+}
+
+// Información del dispositivo
+.device-info {
+  .status-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 12px;
+  }
+}
+
+// Selectores
+ion-select {
+  --placeholder-color: #666;
+  --color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  
+  &::part(icon) {
+    color: #007bff;
+  }
+}
+
+ion-select-option {
+  font-size: 14px;
+}
+
+// Toggles
+ion-toggle {
+  --background: #e0e0e0;
+  --background-checked: #007bff;
+  --handle-background: white;
+  --handle-background-checked: white;
+  transform: scale(0.8);
+  
+  &::part(track) {
+    border-radius: 16px;
+  }
+  
+  &::part(handle) {
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+}
+
+// Badges
+ion-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 8px;
+  
+  &[color="success"] {
+    --background: #28a745;
+    --color: white;
+  }
+  
+  &[color="danger"] {
+    --background: #dc3545;
+    --color: white;
+  }
+}
+
+// Zonas de seguridad
+.security-zones {
+  ion-item {
+    padding: 12px 0;
+    
+    ion-icon[slot="start"] {
+      font-size: 24px;
+      margin-right: 12px;
+    }
+    
+    ion-toggle {
+      margin-left: 8px;
+    }
+  }
+}
+
+// Contactos de emergencia
+.emergency-contacts {
+  ion-item {
+    align-items: center;
+    
+    ion-button[slot="end"] {
+      --padding-start: 8px;
+      --padding-end: 8px;
+      margin: 0;
+      
+      ion-icon {
+        font-size: 18px;
+      }
+    }
+  }
+}
+
+// Botones
+ion-button {
+  --border-radius: 8px;
+  font-weight: 500;
+  text-transform: none;
+  
+  &[expand="block"] {
+    margin: 8px 0;
+    height: 44px;
+  }
+  
+  &[fill="outline"] {
+    --border-width: 2px;
+    --border-style: solid;
+  }
+  
+  &[color="tertiary"] {
+    --background: #6f42c1;
+    --color: white;
+    
+    &[fill="outline"] {
+      --border-color: #6f42c1;
+      --color: #6f42c1;
+    }
+  }
+  
+  &[color="warning"] {
+    --background: #ffc107;
+    --color: #333;
+    
+    &[fill="outline"] {
+      --border-color: #ffc107;
+      --color: #ffc107;
+    }
+  }
+  
+  &[color="success"] {
+    --background: #28a745;
+    --color: white;
+    
+    &[fill="outline"] {
+      --border-color: #28a745;
+      --color: #28a745;
+    }
+  }
+  
+  &[color="danger"] {
+    --background: #dc3545;
+    --color: white;
+    
+    &[fill="outline"] {
+      --border-color: #dc3545;
+      --color: #dc3545;
+    }
+  }
+}
+
+// Grid de acciones
+ion-grid {
+  padding: 0;
+  
+  ion-col {
+    padding: 4px;
+  }
+}
+
+// Toolbar
+ion-toolbar {
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+// Estados especiales
+.setting-group {
+  margin-bottom: 24px;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.setting-item {
+  &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  
+  &.highlighted {
+    background: #e3f2fd;
+    border-left: 4px solid #2196f3;
+    padding-left: 12px;
+  }
+}
+
+// Responsive design
+@media (min-width: 768px) {
+  ion-card {
+    margin: 16px 0;
+    padding: 8px;
+  }
+  
+  ion-card-title {
+    font-size: 20px;
+    margin-bottom: 12px;
+    
+    ion-icon {
+      font-size: 24px;
+    }
+  }
+  
+  ion-item {
+    padding: 16px 12px;
+    
+    ion-label h3 {
+      font-size: 16px;
+    }
+    
+    ion-label p {
+      font-size: 14px;
+    }
+  }
+  
+  ion-button[expand="block"] {
+    height: 48px;
+    font-size: 16px;
+  }
+}
+
+// Animaciones
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.setting-item {
+  animation: fadeIn 0.3s ease-out;
+}
+
+// Estados de conexión
+.connection-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  
+  &.connected {
+    color: #28a745;
+  }
+  
+  &.disconnected {
+    color: #dc3545;
+  }
+  
+  .status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: pulse 2s infinite;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+// Personalización de listas específicas
+.device-info-list {
+  ion-item {
+    --min-height: 48px;
+    
+    ion-label h3 {
+      color: #333;
+      font-weight: 500;
+    }
+    
+    ion-label p {
+      color: #666;
+      font-family: monospace;
+    }
+  }
+}
+
+.settings-list {
+  ion-item {
+    --min-height: 56px;
+    
+    ion-select {
+      max-width: 140px;
+      text-align: right;
+    }
+  }
+}
+
+// Estados de guardado
+.saving-indicator {
+  opacity: 0.7;
+  pointer-events: none;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 1;
+  }
+}

@@ -1,0 +1,232 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Panel de Control</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="refreshStatus()">
+        <ion-icon name="refresh-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- Estado del Sistema con funcionalidad real -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Estado del Sistema Antiasalto</ion-card-subtitle>
+      <ion-card-title>
+        <ion-icon 
+          [name]="systemStatus.armed ? 'shield-checkmark' : 'shield-outline'" 
+          [color]="systemStatusColor">
+        </ion-icon>
+        {{ systemStatusText }}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <div class="status-item">
+              <ion-icon 
+                name="location" 
+                [color]="systemStatus.armed ? 'success' : 'medium'">
+              </ion-icon>
+              <ion-label>
+                <h3>GPS</h3>
+                <p>{{ systemStatus.armed ? 'Rastreando' : 'Inactivo' }}</p>
+              </ion-label>
+            </div>
+          </ion-col>
+          <ion-col size="6">
+            <div class="status-item">
+              <ion-icon 
+                name="wifi" 
+                [color]="systemStatus.armed ? 'success' : 'medium'">
+              </ion-icon>
+              <ion-label>
+                <h3>Conexión</h3>
+                <p>{{ systemStatus.armed ? 'En línea' : 'Standby' }}</p>
+              </ion-label>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <ion-button 
+              expand="block" 
+              [color]="systemStatus.armed ? 'medium' : 'success'"
+              (click)="toggleSystemArmed()">
+              <ion-icon 
+                [name]="systemStatus.armed ? 'shield-outline' : 'shield-checkmark'" 
+                slot="start">
+              </ion-icon>
+              {{ systemStatus.armed ? 'Desarmar Sistema' : 'Armar Sistema' }}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Ubicación Actual con botón funcional -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Ubicación del Vehículo</ion-card-subtitle>
+      <ion-card-title>Santiago, Chile</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Última actualización: {{ currentTime }}</p>
+      <ion-button expand="block" fill="outline" (click)="viewLocation()">
+        <ion-icon name="map" slot="start"></ion-icon>
+        Ver en Mapa GPS
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Acciones Rápidas con funcionalidad real -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Acciones Rápidas</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <ion-button 
+              expand="block" 
+              [color]="systemStatus.alarmActive ? 'success' : 'danger'" 
+              (click)="activateAlarm()">
+              <ion-icon 
+                [name]="systemStatus.alarmActive ? 'checkmark-circle' : 'alarm'" 
+                slot="start">
+              </ion-icon>
+              {{ alarmButtonText }}
+            </ion-button>
+          </ion-col>
+          <ion-col size="6">
+            <ion-button 
+              expand="block" 
+              [color]="lockButtonColor" 
+              (click)="lockVehicle()">
+              <ion-icon 
+                [name]="systemStatus.vehicleLocked ? 'lock-open' : 'lock-closed'" 
+                slot="start">
+              </ion-icon>
+              {{ lockButtonText }}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Estado del Vehículo -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Estado del Vehículo</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-icon 
+            [name]="systemStatus.vehicleLocked ? 'lock-closed' : 'lock-open'" 
+            [color]="systemStatus.vehicleLocked ? 'warning' : 'success'" 
+            slot="start">
+          </ion-icon>
+          <ion-label>
+            <h3>Estado del Motor</h3>
+            <p>{{ systemStatus.vehicleLocked ? 'Bloqueado' : 'Disponible' }}</p>
+          </ion-label>
+          <ion-badge 
+            [color]="systemStatus.vehicleLocked ? 'warning' : 'success'" 
+            slot="end">
+            {{ systemStatus.vehicleLocked ? 'Bloqueado' : 'OK' }}
+          </ion-badge>
+        </ion-item>
+        
+        <ion-item>
+          <ion-icon 
+            [name]="systemStatus.alarmActive ? 'alert-circle' : 'shield-checkmark'" 
+            [color]="systemStatus.alarmActive ? 'danger' : 'success'" 
+            slot="start">
+          </ion-icon>
+          <ion-label>
+            <h3>Sistema de Alarma</h3>
+            <p>{{ systemStatus.alarmActive ? 'Alarma activa' : 'Normal' }}</p>
+          </ion-label>
+          <ion-badge 
+            [color]="systemStatus.alarmActive ? 'danger' : 'success'" 
+            slot="end">
+            {{ systemStatus.alarmActive ? 'ALARMA' : 'OK' }}
+          </ion-badge>
+        </ion-item>
+        
+        <ion-item>
+          <ion-icon name="battery-full" color="success" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Batería del Dispositivo</h3>
+            <p>Nivel óptimo</p>
+          </ion-label>
+          <ion-badge color="success" slot="end">85%</ion-badge>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Historial Reciente -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Actividad Reciente</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-icon 
+            [name]="systemStatus.armed ? 'checkmark-circle' : 'shield-outline'" 
+            [color]="systemStatus.armed ? 'success' : 'medium'" 
+            slot="start">
+          </ion-icon>
+          <ion-label>
+            <h3>{{ systemStatus.armed ? 'Sistema armado' : 'Sistema en standby' }}</h3>
+            <p>{{ systemStatus.armed ? 'Protección activa' : 'Modo inactivo' }}</p>
+          </ion-label>
+        </ion-item>
+        
+        <ion-item>
+          <ion-icon name="location" color="primary" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Ubicación actualizada</h3>
+            <p>Hace {{ currentTime }}</p>
+          </ion-label>
+        </ion-item>
+        
+        <ion-item>
+          <ion-icon name="wifi" color="success" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Conexión establecida</h3>
+            <p>Hace 5 minutos</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Toast para notificaciones -->
+  <ion-toast
+    [isOpen]="isToastOpen"
+    [message]="toastMessage"
+    [duration]="3000"
+    [color]="toastColor"
+    position="bottom"
+    (didDismiss)="setToastOpen(false)">
+  </ion-toast>
+
+  <!-- Alert para confirmaciones -->
+  <ion-alert
+    [isOpen]="isAlertOpen"
+    [header]="alertHeader"
+    [message]="alertMessage"
+    [buttons]="alertButtons"
+    (didDismiss)="setAlertOpen(false)">
+  </ion-alert>
+</ion-content>
