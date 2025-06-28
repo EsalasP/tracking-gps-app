@@ -22,9 +22,7 @@ import {
   closeCircle,
   layers, 
   addCircle, 
-  list,
-  radioButtonOn,
-  radioButtonOff 
+  list 
 } from 'ionicons/icons';
 import { 
   IonContent, 
@@ -116,9 +114,6 @@ export class TrackingPage implements OnInit, OnDestroy, AfterViewInit {
   // GPS real
   currentPosition: GPSPosition | null = null;
   
-  // NUEVO: Auto-seguimiento
-  autoFollowEnabled: boolean = true;
-  
   // Control de tiempo
   private startTime: Date = new Date();
   private updateInterval: any;
@@ -201,9 +196,7 @@ export class TrackingPage implements OnInit, OnDestroy, AfterViewInit {
       home,
       business,
       checkmarkCircle,
-      closeCircle,
-      radioButtonOn,
-      radioButtonOff
+      closeCircle
     });
   }
 
@@ -409,16 +402,13 @@ export class TrackingPage implements OnInit, OnDestroy, AfterViewInit {
     try {
       this.mapService.initMap(this.mapContainer, {
         center: [this.currentPosition.latitude, this.currentPosition.longitude],
-        zoom: 16
+        zoom: 15
       });
-
-      // NUEVO: Configurar auto-seguimiento en el servicio de mapa
-      this.mapService.setAutoFollow(this.autoFollowEnabled);
 
       this.addGeofenceZones();
       
       this.mapInitialized = true;
-      this.showToast('Mapa inicializado con auto-seguimiento', 'success');
+      this.showToast('Mapa inicializado', 'success');
     } catch (error) {
       console.error('Error inicializando mapa:', error);
       this.showToast('Error inicializando mapa', 'danger');
@@ -439,38 +429,6 @@ export class TrackingPage implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  // NUEVO: Control de auto-seguimiento
-  toggleAutoFollow(): void {
-    this.autoFollowEnabled = !this.autoFollowEnabled;
-    
-    if (this.mapInitialized) {
-      this.mapService.setAutoFollow(this.autoFollowEnabled);
-    }
-    
-    const message = this.autoFollowEnabled 
-      ? 'Auto-seguimiento activado - El mapa seguirá al vehículo'
-      : 'Auto-seguimiento desactivado - Control manual del mapa';
-    
-    this.showToast(message, this.autoFollowEnabled ? 'success' : 'medium');
-    
-    // Enviar notificación del cambio
-    this.notificationsService.triggerSystemAlert(
-      'Configuración de seguimiento',
-      message,
-      'info'
-    );
-  }
-
-  // NUEVO: Forzar centrado inmediato
-  forceCenter(): void {
-    if (this.mapInitialized && this.currentPosition) {
-      this.mapService.forceFollowVehicle();
-      this.showToast('Mapa centrado en vehículo', 'primary');
-    } else if (!this.currentPosition) {
-      this.showToast('No hay ubicación GPS disponible', 'warning');
-    }
-  }
-
   async centerMap(): Promise<void> {
     if (this.currentPosition) {
       this.showToast(`Centrando en: ${this.currentPosition.latitude.toFixed(4)}, ${this.currentPosition.longitude.toFixed(4)}`, 'primary');
@@ -488,15 +446,6 @@ export class TrackingPage implements OnInit, OnDestroy, AfterViewInit {
 
   toggleMapLayer(): void {
     this.showToast('Cambio de capa - Función en desarrollo', 'medium');
-  }
-
-  // NUEVO: Limpiar ruta del mapa
-  clearRoute(): void {
-    if (this.mapInitialized) {
-      this.mapService.clearRoute();
-      this.distanceTraveled = 0;
-      this.showToast('Ruta limpiada del mapa', 'medium');
-    }
   }
 
   // MÉTODOS DE COMPARTIR Y HISTORIAL

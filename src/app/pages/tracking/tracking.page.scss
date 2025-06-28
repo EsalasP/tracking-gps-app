@@ -1,334 +1,6 @@
-// Nuevos estilos para GPS real
+// Estilos mejorados para GPS real con auto-seguimiento
 
-// Coordenadas GPS overlay
-.coordinates-overlay {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 10px;
-  font-family: monospace;
-  text-align: right;
-  backdrop-filter: blur(4px);
-  
-  p {
-    margin: 2px 0;
-    line-height: 1.2;
-  }
-  
-  .accuracy {
-    color: #ffc107;
-    font-weight: 600;
-  }
-}
-
-// Marcador del vehículo con animación de tracking
-.vehicle-marker {
-  &.tracking {
-    animation: trackingPulse 2s infinite, trackingMove 4s infinite ease-in-out;
-  }
-}
-
-@keyframes trackingPulse {
-  0%, 100% {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 0 0 rgba(0, 123, 255, 0.7);
-  }
-  70% {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 0 12px rgba(0, 123, 255, 0);
-  }
-}
-
-@keyframes trackingMove {
-  0%, 100% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  25% {
-    transform: translate(-48%, -52%) rotate(2deg);
-  }
-  50% {
-    transform: translate(-52%, -48%) rotate(-1deg);
-  }
-  75% {
-    transform: translate(-48%, -52%) rotate(1deg);
-  }
-}
-
-// Información GPS específica
-.gps-info {
-  color: #007bff !important;
-  font-size: 11px !important;
-  font-weight: 500 !important;
-  margin-top: 2px !important;
-}
-
-// Estados de precisión GPS
-.accuracy-excellent {
-  color: #28a745;
-}
-
-.accuracy-good {
-  color: #ffc107;
-}
-
-.accuracy-poor {
-  color: #dc3545;
-}
-
-// Badges de estado GPS
-ion-badge {
-  &[color="success"] {
-    --background: #28a745;
-    --color: white;
-    animation: successGlow 2s infinite;
-  }
-  
-  &[color="danger"] {
-    --background: #dc3545;
-    --color: white;
-    animation: errorBlink 1s infinite;
-  }
-  
-  &[color="warning"] {
-    --background: #ffc107;
-    --color: #333;
-  }
-}
-
-@keyframes successGlow {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.8;
-  }
-}
-
-@keyframes errorBlink {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.6;
-  }
-}
-
-// Toast personalizado
-ion-toast {
-  --border-radius: 12px;
-  --box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-  
-  &::part(message) {
-    font-weight: 500;
-  }
-}
-
-// Estados del GPS en la lista
-ion-list {
-  ion-item {
-    &.gps-connected {
-      --background: rgba(40, 167, 69, 0.1);
-      border-left: 4px solid #28a745;
-    }
-    
-    &.gps-disconnected {
-      --background: rgba(220, 53, 69, 0.1);
-      border-left: 4px solid #dc3545;
-    }
-    
-    &.gps-searching {
-      --background: rgba(255, 193, 7, 0.1);
-      border-left: 4px solid #ffc107;
-      
-      ion-icon {
-        animation: spin 2s linear infinite;
-      }
-    }
-  }
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-// Botones de control GPS
-.gps-controls {
-  ion-button {
-    &[fill="outline"] {
-      --border-width: 2px;
-      transition: all 0.3s ease;
-      
-      &:hover {
-        transform: translateY(-2px);
-        --box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
-      }
-      
-      &:active {
-        transform: translateY(0);
-      }
-    }
-    
-    &.loading {
-      pointer-events: none;
-      opacity: 0.7;
-      
-      ion-icon {
-        animation: spin 1s linear infinite;
-      }
-    }
-  }
-}
-
-// Mapa placeholder mejorado para GPS
-.map-placeholder {
-  position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-      radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
-    pointer-events: none;
-  }
-  
-  // Grid de coordenadas simulado
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: 
-      linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-    background-size: 20px 20px;
-    opacity: 0.3;
-    pointer-events: none;
-  }
-}
-
-// Indicadores de estado conectado/desconectado
-.status-indicator {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  
-  &::before {
-    content: '';
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: currentColor;
-  }
-  
-  &.connected::before {
-    background: #28a745;
-    animation: pulse 2s infinite;
-  }
-  
-  &.disconnected::before {
-    background: #dc3545;
-    animation: errorBlink 1s infinite;
-  }
-  
-  &.searching::before {
-    background: #ffc107;
-    animation: pulse 1s infinite;
-  }
-}
-
-// Responsive para pantallas más grandes
-@media (min-width: 768px) {
-  .coordinates-overlay {
-    top: 24px;
-    right: 24px;
-    padding: 12px 16px;
-    font-size: 12px;
-  }
-  
-  .map-container {
-    height: 400px;
-  }
-  
-  .vehicle-marker {
-    width: 50px;
-    height: 50px;
-    
-    ion-icon {
-      font-size: 24px;
-    }
-  }
-}
-
-// Modo oscuro
-@media (prefers-color-scheme: dark) {
-  .coordinates-overlay {
-    background: rgba(255, 255, 255, 0.9);
-    color: #333;
-    
-    .accuracy {
-      color: #f39c12;
-    }
-  }
-  
-  .gps-info {
-    color: #4dabf7 !important;
-  }
-}
-// Estilos para el mapa real
-.real-map {
-  height: 100%;
-  width: 100%;
-  border-radius: 8px;
-  z-index: 1;
-}
-
-// Controles superpuestos en el mapa
-.map-controls-overlay {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  z-index: 1000;
-
-  .map-control-btn {
-    --background: rgba(0, 0, 0, 0.7);
-    --color: white;
-    --border-radius: 50%;
-    --padding-start: 12px;
-    --padding-end: 12px;
-    --padding-top: 12px;
-    --padding-bottom: 12px;
-    backdrop-filter: blur(4px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-
-    &:hover {
-      --background: rgba(0, 0, 0, 0.9);
-    }
-
-    ion-icon {
-      font-size: 20px;
-    }
-  }
-}
-
-// Actualizar coordenadas superpuestas
+// Coordenadas GPS overlay mejorado
 .coordinates-overlay {
   position: absolute;
   top: 16px;
@@ -377,9 +49,323 @@ ion-list {
       color: white;
     }
   }
+
+  // NUEVO: Estado del auto-seguimiento
+  .auto-follow-status {
+    font-weight: 600;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-top: 4px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    &.enabled {
+      background: rgba(40, 167, 69, 0.8);
+      color: white;
+      animation: autoFollowGlow 3s infinite;
+    }
+
+    &.disabled {
+      background: rgba(108, 117, 125, 0.8);
+      color: white;
+    }
+  }
 }
 
-// Spinner de carga
+// NUEVA: Animación para auto-seguimiento
+@keyframes autoFollowGlow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 10px rgba(40, 167, 69, 0.8);
+  }
+}
+
+// Controles superpuestos en el mapa mejorados
+.map-controls-overlay {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 1000;
+
+  .map-control-btn {
+    --background: rgba(0, 0, 0, 0.7);
+    --color: white;
+    --border-radius: 50%;
+    --padding-start: 12px;
+    --padding-end: 12px;
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+
+    &:hover {
+      --background: rgba(0, 0, 0, 0.9);
+      transform: scale(1.1);
+    }
+
+    ion-icon {
+      font-size: 20px;
+    }
+
+    // NUEVO: Estilo especial para auto-seguimiento
+    &.auto-follow-btn {
+      &.active {
+        --background: rgba(40, 167, 69, 0.9);
+        --color: white;
+        animation: autoFollowPulse 2s infinite;
+      }
+
+      &:not(.active) {
+        --background: rgba(108, 117, 125, 0.7);
+      }
+    }
+  }
+}
+
+// NUEVA: Animación para botón de auto-seguimiento activo
+@keyframes autoFollowPulse {
+  0%, 100% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 0 0 rgba(40, 167, 69, 0.7);
+  }
+  70% {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 0 8px rgba(40, 167, 69, 0);
+  }
+}
+
+// Información de ubicación mejorada
+.location-info {
+  .info-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+
+    ion-icon {
+      font-size: 24px;
+      margin-top: 4px;
+    }
+
+    > div {
+      flex: 1;
+
+      h3 {
+        margin: 0 0 4px 0;
+        font-weight: 600;
+        color: #333;
+      }
+
+      p {
+        margin: 2px 0;
+        color: #666;
+        font-size: 12px;
+
+        &.gps-info {
+          color: #007bff !important;
+          font-weight: 500 !important;
+        }
+
+        // NUEVO: Información de auto-seguimiento
+        &.auto-follow-info {
+          color: #28a745 !important;
+          font-weight: 500 !important;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          margin-top: 4px;
+
+          ion-icon {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    // NUEVO: Contenedor para múltiples badges
+    .status-badges {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: flex-end;
+
+      .auto-follow-badge {
+        font-size: 9px;
+        padding: 2px 6px;
+      }
+    }
+  }
+}
+
+// Marcador del vehículo con animación de tracking mejorada
+.vehicle-marker {
+  &.tracking {
+    animation: trackingPulse 2s infinite, trackingMove 4s infinite ease-in-out;
+  }
+}
+
+// Animación mejorada para el pulso del tracking
+@keyframes trackingPulse {
+  0%, 100% {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 0 0 rgba(220, 53, 69, 0.7);
+  }
+  70% {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 0 12px rgba(220, 53, 69, 0);
+  }
+}
+
+@keyframes trackingMove {
+  0%, 100% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  25% {
+    transform: translate(-48%, -52%) rotate(2deg);
+  }
+  50% {
+    transform: translate(-52%, -48%) rotate(-1deg);
+  }
+  75% {
+    transform: translate(-48%, -52%) rotate(1deg);
+  }
+}
+
+// Badges de estado GPS mejorados
+ion-badge {
+  &[color="success"] {
+    --background: #28a745;
+    --color: white;
+    animation: successGlow 2s infinite;
+  }
+  
+  &[color="danger"] {
+    --background: #dc3545;
+    --color: white;
+    animation: errorBlink 1s infinite;
+  }
+  
+  &[color="warning"] {
+    --background: #ffc107;
+    --color: #333;
+  }
+
+  &[color="medium"] {
+    --background: #6c757d;
+    --color: white;
+  }
+}
+
+@keyframes successGlow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes errorBlink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+// Estados del GPS en la lista mejorados
+ion-list {
+  ion-item {
+    &.gps-connected {
+      --background: rgba(40, 167, 69, 0.1);
+      border-left: 4px solid #28a745;
+    }
+    
+    &.gps-disconnected {
+      --background: rgba(220, 53, 69, 0.1);
+      border-left: 4px solid #dc3545;
+    }
+    
+    &.gps-searching {
+      --background: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+      
+      ion-icon {
+        animation: spin 2s linear infinite;
+      }
+    }
+
+    // NUEVO: Estado de auto-seguimiento
+    &.auto-follow-active {
+      --background: rgba(40, 167, 69, 0.05);
+      border-left: 4px solid #28a745;
+    }
+
+    &.auto-follow-inactive {
+      --background: rgba(108, 117, 125, 0.05);
+      border-left: 4px solid #6c757d;
+    }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Botones de control GPS mejorados
+.gps-controls {
+  ion-button {
+    &[fill="outline"] {
+      --border-width: 2px;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-2px);
+        --box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+      }
+      
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    // NUEVO: Estilo especial para botón de auto-seguimiento
+    &[color="success"][fill="solid"] {
+      --background: linear-gradient(135deg, #28a745, #20c997);
+      --color: white;
+      animation: autoFollowButtonGlow 3s infinite;
+    }
+    
+    &.loading {
+      pointer-events: none;
+      opacity: 0.7;
+      
+      ion-icon {
+        animation: spin 1s linear infinite;
+      }
+    }
+  }
+}
+
+// NUEVA: Animación para botón de auto-seguimiento
+@keyframes autoFollowButtonGlow {
+  0%, 100% {
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 16px rgba(40, 167, 69, 0.5);
+  }
+}
+
+// Spinner de carga mejorado
 .loading-spinner {
   margin-top: 16px;
   
@@ -393,19 +379,44 @@ ion-list {
   animation: spin 2s linear infinite;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-// Mejorar el placeholder del mapa
+// Mapa placeholder mejorado para GPS
 .map-placeholder {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  
+  // Grid de coordenadas simulado
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
   .loading-spinner {
     margin-top: 20px;
   }
@@ -425,8 +436,80 @@ ion-list {
   }
 }
 
-// Responsive para controles del mapa
+// Estilos para el mapa real
+.real-map {
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  z-index: 1;
+}
+
+// Indicadores de estado conectado/desconectado mejorados
+.status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  
+  &::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  
+  &.connected::before {
+    background: #28a745;
+    animation: pulse 2s infinite;
+  }
+  
+  &.disconnected::before {
+    background: #dc3545;
+    animation: errorBlink 1s infinite;
+  }
+  
+  &.searching::before {
+    background: #ffc107;
+    animation: pulse 1s infinite;
+  }
+
+  // NUEVO: Indicador de auto-seguimiento
+  &.auto-follow::before {
+    background: #17a2b8;
+    animation: autoFollowPulse 2s infinite;
+  }
+}
+
+// Toast personalizado mejorado
+ion-toast {
+  --border-radius: 12px;
+  --box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  
+  &::part(message) {
+    font-weight: 500;
+  }
+
+  // NUEVO: Estilo especial para notificaciones de auto-seguimiento
+  &[color="success"]::part(container) {
+    background: linear-gradient(135deg, #28a745, #20c997);
+  }
+}
+
+// Responsive para pantallas más grandes
 @media (min-width: 768px) {
+  .coordinates-overlay {
+    top: 24px;
+    right: 24px;
+    padding: 16px 20px;
+    font-size: 12px;
+    min-width: 160px;
+
+    .auto-follow-status {
+      font-size: 10px;
+      padding: 3px 8px;
+    }
+  }
+  
   .map-controls-overlay {
     top: 24px;
     left: 24px;
@@ -444,12 +527,50 @@ ion-list {
     }
   }
 
+  .vehicle-marker {
+    width: 50px;
+    height: 50px;
+    
+    ion-icon {
+      font-size: 24px;
+    }
+  }
+
+  .location-info .info-header .status-badges {
+    flex-direction: row;
+    gap: 8px;
+  }
+}
+
+// Modo oscuro
+@media (prefers-color-scheme: dark) {
   .coordinates-overlay {
-    top: 24px;
-    right: 24px;
-    padding: 16px 20px;
-    font-size: 12px;
-    min-width: 160px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    
+    .accuracy {
+      color: #f39c12;
+    }
+
+    .auto-follow-status {
+      &.enabled {
+        background: rgba(40, 167, 69, 0.9);
+        color: white;
+      }
+
+      &.disabled {
+        background: rgba(108, 117, 125, 0.9);
+        color: white;
+      }
+    }
+  }
+  
+  .gps-info {
+    color: #4dabf7 !important;
+  }
+
+  .auto-follow-info {
+    color: #51cf66 !important;
   }
 }
 
@@ -459,11 +580,80 @@ ion-list {
   background: transparent !important;
 }
 
-// Personalización adicional del mapa
+// Personalización adicional del mapa con auto-seguimiento
 ::ng-deep .leaflet-popup-content-wrapper {
   border-radius: 8px;
 }
 
 ::ng-deep .leaflet-popup-tip {
   background: white;
+}
+
+// NUEVA: Animación CSS personalizada en el mapa
+::ng-deep .leaflet-marker-icon {
+  transition: all 0.3s ease;
+  
+  &.auto-follow-marker {
+    animation: autoFollowMarker 4s infinite ease-in-out;
+  }
+}
+
+@keyframes autoFollowMarker {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.05) rotate(1deg);
+  }
+  50% {
+    transform: scale(1) rotate(0deg);
+  }
+  75% {
+    transform: scale(1.05) rotate(-1deg);
+  }
+}
+
+// Estados específicos para tarjetas
+ion-card {
+  &.auto-follow-active {
+    border-left: 4px solid #28a745;
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.05), rgba(255, 255, 255, 1));
+  }
+
+  &.gps-tracking {
+    border-left: 4px solid #007bff;
+    background: linear-gradient(135deg, rgba(0, 123, 255, 0.05), rgba(255, 255, 255, 1));
+  }
+}
+
+// Mejoras generales de UI
+ion-content {
+  --background: #f5f5f5;
+}
+
+ion-card {
+  margin: 8px 0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+ion-button {
+  --border-radius: 8px;
+  font-weight: 500;
+  text-transform: none;
+  
+  &[expand="block"] {
+    margin: 8px 0;
+    height: 44px;
+  }
+}
+
+ion-toolbar {
+  --padding-start: 16px;
+  --padding-end: 16px;
 }
