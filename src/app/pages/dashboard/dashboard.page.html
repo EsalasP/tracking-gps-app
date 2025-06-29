@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
+<ion-content [fullscreen]="true">
   <!-- Estado del Sistema con funcionalidad real -->
   <ion-card>
     <ion-card-header>
@@ -24,8 +24,9 @@
     </ion-card-header>
     <ion-card-content>
       <ion-grid>
-        <ion-row>
-          <ion-col size="6">
+        <!-- Información de estado responsiva -->
+        <ion-row class="ion-align-items-center">
+          <ion-col size="12" size-sm="6">
             <div class="status-item">
               <ion-icon 
                 name="location" 
@@ -37,7 +38,7 @@
               </ion-label>
             </div>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="12" size-sm="6">
             <div class="status-item">
               <ion-icon 
                 name="wifi" 
@@ -50,12 +51,15 @@
             </div>
           </ion-col>
         </ion-row>
-        <ion-row>
-          <ion-col size="12">
+        
+        <!-- Botón principal centrado y responsive -->
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="12" size-sm="10" size-md="8" size-lg="6">
             <ion-button 
               expand="block" 
               [color]="systemStatus.armed ? 'medium' : 'success'"
-              (click)="toggleSystemArmed()">
+              (click)="toggleSystemArmed()"
+              class="main-action-button">
               <ion-icon 
                 [name]="systemStatus.armed ? 'shield-outline' : 'shield-checkmark'" 
                 slot="start">
@@ -76,43 +80,53 @@
     </ion-card-header>
     <ion-card-content>
       <p>Última actualización: {{ currentTime }}</p>
-      <ion-button expand="block" fill="outline" (click)="viewLocation()">
-        <ion-icon name="map" slot="start"></ion-icon>
-        Ver en Mapa GPS
-      </ion-button>
+      <!-- Grid responsivo para el botón -->
+      <ion-grid>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="12" size-sm="8" size-md="6">
+            <ion-button expand="block" fill="outline" (click)="viewLocation()">
+              <ion-icon name="map" slot="start"></ion-icon>
+              Ver en Mapa GPS
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-card-content>
   </ion-card>
 
-  <!-- Acciones Rápidas con funcionalidad real -->
+  <!-- Acciones Rápidas con grid completamente responsivo -->
   <ion-card>
     <ion-card-header>
       <ion-card-title>Acciones Rápidas</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-grid>
-        <ion-row>
-          <ion-col size="6">
+        <ion-row class="ion-justify-content-center">
+          <!-- Botones centrados y responsivos -->
+          <ion-col size="12" size-sm="6" size-md="6" size-lg="6">
             <ion-button 
               expand="block" 
               [color]="systemStatus.alarmActive ? 'success' : 'danger'" 
-              (click)="activateAlarm()">
+              (click)="activateAlarm()"
+              class="action-button">
               <ion-icon 
                 [name]="systemStatus.alarmActive ? 'checkmark-circle' : 'alarm'" 
                 slot="start">
               </ion-icon>
-              {{ alarmButtonText }}
+              <span class="button-text">{{ alarmButtonText }}</span>
             </ion-button>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="12" size-sm="6" size-md="6" size-lg="6">
             <ion-button 
               expand="block" 
               [color]="lockButtonColor" 
-              (click)="lockVehicle()">
+              (click)="lockVehicle()"
+              class="action-button">
               <ion-icon 
                 [name]="systemStatus.vehicleLocked ? 'lock-open' : 'lock-closed'" 
                 slot="start">
               </ion-icon>
-              {{ lockButtonText }}
+              <span class="button-text">{{ lockButtonText }}</span>
             </ion-button>
           </ion-col>
         </ion-row>

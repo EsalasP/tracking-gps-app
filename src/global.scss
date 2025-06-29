@@ -65,3 +65,501 @@
   font-size: 10px !important;
   background: rgba(255, 255, 255, 0.8) !important;
 }
+/* ==========================================
+   ESTILOS RESPONSIVOS GLOBALES PARA MÓVILES
+   ========================================== */
+
+/* Mejoras globales para botones responsivos */
+ion-button {
+  // Mejorar área de toque para móviles
+  min-height: 44px; // Mínimo recomendado por Apple/Google
+  min-width: 44px;
+  
+  // Eliminar highlight azul en toque
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  
+  // Mejor espaciado en móviles
+  --padding-start: 16px;
+  --padding-end: 16px;
+  
+  &[expand="block"] {
+    margin: 8px 0;
+    
+    @media (max-width: 576px) {
+      margin: 6px 0;
+      --padding-start: 12px;
+      --padding-end: 12px;
+    }
+  }
+  
+  // Botones con iconos
+  ion-icon {
+    margin-right: 8px;
+    
+    @media (max-width: 576px) {
+      margin-right: 6px;
+      font-size: 16px;
+    }
+  }
+}
+
+/* Grid responsivo global */
+ion-grid {
+  --ion-grid-padding: 16px;
+  --ion-grid-padding-xs: 12px;
+  --ion-grid-padding-sm: 16px;
+  --ion-grid-padding-md: 20px;
+  --ion-grid-padding-lg: 24px;
+  --ion-grid-padding-xl: 32px;
+  
+  ion-row {
+    --ion-grid-column-padding: 4px;
+    --ion-grid-column-padding-xs: 3px;
+    --ion-grid-column-padding-sm: 4px;
+    --ion-grid-column-padding-md: 6px;
+    --ion-grid-column-padding-lg: 8px;
+    --ion-grid-column-padding-xl: 12px;
+  }
+}
+
+/* Cards responsivas globales */
+ion-card {
+  // Márgenes responsivos
+  margin: 8px 0;
+  
+  @media (max-width: 576px) {
+    margin: 6px 0;
+  }
+  
+  @media (min-width: 768px) {
+    margin: 12px 0;
+  }
+  
+  @media (min-width: 1024px) {
+    margin: 16px 0;
+  }
+  
+  // Padding interno responsivo
+  ion-card-content {
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --padding-top: 16px;
+    --padding-bottom: 16px;
+    
+    @media (max-width: 576px) {
+      --padding-start: 12px;
+      --padding-end: 12px;
+      --padding-top: 12px;
+      --padding-bottom: 12px;
+    }
+    
+    @media (min-width: 1024px) {
+      --padding-start: 20px;
+      --padding-end: 20px;
+      --padding-top: 20px;
+      --padding-bottom: 20px;
+    }
+  }
+}
+
+/* Títulos responsivos */
+ion-card-title {
+  font-size: 18px;
+  line-height: 1.3;
+  
+  @media (max-width: 576px) {
+    font-size: 16px;
+  }
+  
+  @media (min-width: 768px) {
+    font-size: 20px;
+  }
+}
+
+ion-card-subtitle {
+  font-size: 12px;
+  
+  @media (max-width: 576px) {
+    font-size: 11px;
+  }
+  
+  @media (min-width: 768px) {
+    font-size: 14px;
+  }
+}
+
+/* Items de lista responsivos */
+ion-item {
+  --min-height: 48px;
+  --padding-start: 0;
+  --padding-end: 0;
+  
+  @media (max-width: 576px) {
+    --min-height: 44px;
+  }
+  
+  @media (min-width: 768px) {
+    --min-height: 52px;
+  }
+  
+  ion-label {
+    margin: 8px 0;
+    
+    h1, h2, h3, h4, h5, h6 {
+      margin: 0 0 4px 0;
+      line-height: 1.3;
+      
+      @media (max-width: 576px) {
+        margin-bottom: 2px;
+      }
+    }
+    
+    p {
+      margin: 0;
+      line-height: 1.4;
+    }
+  }
+}
+
+/* Iconos responsivos */
+ion-icon {
+  // Tamaños responsivos por defecto
+  font-size: 20px;
+  
+  @media (max-width: 576px) {
+    font-size: 18px;
+  }
+  
+  @media (min-width: 768px) {
+    font-size: 24px;
+  }
+  
+  // Iconos en botones
+  ion-button & {
+    font-size: 18px;
+    
+    @media (max-width: 576px) {
+      font-size: 16px;
+    }
+    
+    @media (min-width: 768px) {
+      font-size: 20px;
+    }
+  }
+  
+  // Iconos en items
+  ion-item & {
+    margin-right: 12px;
+    
+    @media (max-width: 576px) {
+      margin-right: 8px;
+    }
+  }
+}
+
+/* Badges responsivos */
+ion-badge {
+  font-size: 11px;
+  padding: 4px 8px;
+  
+  @media (max-width: 576px) {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+  
+  @media (min-width: 768px) {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+}
+
+/* Toolbar responsivo */
+ion-toolbar {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  
+  @media (max-width: 576px) {
+    --padding-start: 12px;
+    --padding-end: 12px;
+  }
+  
+  @media (min-width: 1024px) {
+    --padding-start: 24px;
+    --padding-end: 24px;
+  }
+  
+  ion-title {
+    font-size: 18px;
+    
+    @media (max-width: 576px) {
+      font-size: 16px;
+    }
+    
+    @media (min-width: 768px) {
+      font-size: 20px;
+    }
+  }
+}
+
+/* Content responsivo */
+ion-content {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  
+  @media (max-width: 576px) {
+    --padding-start: 12px;
+    --padding-end: 12px;
+    --padding-top: 6px;
+    --padding-bottom: 6px;
+  }
+  
+  @media (min-width: 768px) {
+    --padding-start: 20px;
+    --padding-end: 20px;
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+  }
+  
+  @media (min-width: 1024px) {
+    --padding-start: 24px;
+    --padding-end: 24px;
+    --padding-top: 16px;
+    --padding-bottom: 16px;
+    
+    // Limitar ancho máximo en pantallas grandes
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+/* Selectores y formularios responsivos */
+ion-select {
+  --padding-start: 12px;
+  --padding-end: 12px;
+  min-height: 44px;
+  
+  @media (max-width: 576px) {
+    --padding-start: 8px;
+    --padding-end: 8px;
+    min-height: 40px;
+  }
+}
+
+ion-checkbox {
+  --size: 20px;
+  
+  @media (max-width: 576px) {
+    --size: 18px;
+  }
+  
+  @media (min-width: 768px) {
+    --size: 22px;
+  }
+}
+
+ion-toggle {
+  --track-width: 44px;
+  --track-height: 24px;
+  --handle-width: 20px;
+  --handle-height: 20px;
+  
+  @media (max-width: 576px) {
+    --track-width: 40px;
+    --track-height: 22px;
+    --handle-width: 18px;
+    --handle-height: 18px;
+  }
+}
+
+/* Toast responsivo */
+ion-toast {
+  --border-radius: 8px;
+  
+  @media (max-width: 576px) {
+    --border-radius: 6px;
+  }
+  
+  @media (min-width: 768px) {
+    --border-radius: 12px;
+  }
+}
+
+/* Alert responsivo */
+ion-alert {
+  --max-width: 90%;
+  
+  @media (max-width: 576px) {
+    --max-width: 95%;
+  }
+  
+  @media (min-width: 768px) {
+    --max-width: 500px;
+  }
+}
+
+/* Breakpoints personalizados para columnas */
+ion-col {
+  // Asegurar que las columnas se comporten bien en móviles
+  padding: 4px;
+  
+  @media (max-width: 576px) {
+    padding: 3px;
+    
+    // En móviles, hacer columnas de 6 que ocupen el ancho completo
+    &[size="6"] {
+      --ion-grid-column-width: 100%;
+      max-width: 100%;
+      flex: 0 0 100%;
+    }
+  }
+  
+  @media (min-width: 576px) {
+    padding: 4px;
+  }
+  
+  @media (min-width: 768px) {
+    padding: 6px;
+  }
+  
+  @media (min-width: 1024px) {
+    padding: 8px;
+  }
+}
+
+/* Clases utility para responsive */
+.ion-hide-xs {
+  @media (max-width: 575px) {
+    display: none !important;
+  }
+}
+
+.ion-hide-sm {
+  @media (min-width: 576px) and (max-width: 767px) {
+    display: none !important;
+  }
+}
+
+.ion-hide-md {
+  @media (min-width: 768px) and (max-width: 1023px) {
+    display: none !important;
+  }
+}
+
+.ion-hide-lg {
+  @media (min-width: 1024px) {
+    display: none !important;
+  }
+}
+
+.ion-show-xs {
+  @media (min-width: 576px) {
+    display: none !important;
+  }
+}
+
+.ion-show-sm {
+  @media (max-width: 575px), (min-width: 768px) {
+    display: none !important;
+  }
+}
+
+.ion-show-md {
+  @media (max-width: 767px), (min-width: 1024px) {
+    display: none !important;
+  }
+}
+
+.ion-show-lg {
+  @media (max-width: 1023px) {
+    display: none !important;
+  }
+}
+
+/* Orientación */
+@media (orientation: landscape) and (max-height: 600px) {
+  ion-content {
+    --padding-top: 4px;
+    --padding-bottom: 4px;
+  }
+  
+  ion-card {
+    margin: 4px 0;
+  }
+  
+  ion-button[expand="block"] {
+    height: 36px;
+    min-height: 36px;
+  }
+}
+
+/* Accesibilidad mejorada */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Modo oscuro responsive */
+@media (prefers-color-scheme: dark) {
+  ion-card {
+    --background: #1e1e1e;
+    --color: #ffffff;
+  }
+  
+  ion-content {
+    --background: #121212;
+  }
+}
+
+/* Soporte para pantallas de alta densidad */
+@media (-webkit-min-device-pixel-ratio: 2),
+       (min-resolution: 192dpi) {
+  ion-icon {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Safe area para dispositivos con notch */
+@supports (padding: max(0px)) {
+  ion-content {
+    --padding-start: max(16px, env(safe-area-inset-left));
+    --padding-end: max(16px, env(safe-area-inset-right));
+  }
+  
+  @media (max-width: 576px) {
+    ion-content {
+      --padding-start: max(12px, env(safe-area-inset-left));
+      --padding-end: max(12px, env(safe-area-inset-right));
+    }
+  }
+  
+  ion-toolbar {
+    --padding-start: max(16px, env(safe-area-inset-left));
+    --padding-end: max(16px, env(safe-area-inset-right));
+  }
+}
+
+/* Mejoras específicas para touch */
+@media (pointer: coarse) {
+  ion-button {
+    min-height: 48px; // Más grande para touch
+    --padding-start: 20px;
+    --padding-end: 20px;
+  }
+  
+  ion-item {
+    --min-height: 52px;
+  }
+  
+  ion-select {
+    min-height: 48px;
+  }
+}

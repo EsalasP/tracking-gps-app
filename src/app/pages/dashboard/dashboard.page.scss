@@ -88,3 +88,317 @@ ion-card {
 ion-button {
   transition: all 0.2s ease-in-out;
 }
+/* ==========================================
+   ESTILOS RESPONSIVOS PARA TAB BAR
+   ========================================== */
+
+ion-tabs {
+  position: relative;
+}
+
+ion-tab-bar {
+  --background: #ffffff;
+  --border: 1px solid #e0e0e0;
+  --color: #8c8c8c;
+  --color-selected: #007bff;
+  
+  // Altura responsive del tab bar
+  height: 60px;
+  
+  @media (max-width: 576px) {
+    height: 56px;
+    --border: 0.5px solid #e0e0e0;
+  }
+  
+  @media (min-width: 768px) {
+    height: 64px;
+  }
+  
+  // Safe area para dispositivos con indicador home
+  @supports (padding: max(0px)) {
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+    
+    @media (max-width: 576px) {
+      padding-bottom: max(4px, env(safe-area-inset-bottom));
+    }
+  }
+}
+
+ion-tab-button {
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --padding-start: 4px;
+  --padding-end: 4px;
+  
+  // Responsive padding
+  @media (max-width: 576px) {
+    --padding-top: 6px;
+    --padding-bottom: 6px;
+    --padding-start: 2px;
+    --padding-end: 2px;
+  }
+  
+  @media (min-width: 768px) {
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+    --padding-start: 8px;
+    --padding-end: 8px;
+  }
+  
+  // Área de toque mínima
+  min-height: 44px;
+  min-width: 44px;
+  
+  // Estados de selección
+  &.tab-selected {
+    --color: #007bff;
+    
+    ion-icon {
+      transform: scale(1.1);
+      transition: transform 0.2s ease-in-out;
+    }
+    
+    ion-label {
+      font-weight: 600;
+    }
+  }
+  
+  // Efectos hover para dispositivos que lo soporten
+  @media (hover: hover) {
+    &:hover:not(.tab-selected) {
+      --color: #495057;
+      
+      ion-icon {
+        transform: scale(1.05);
+        transition: transform 0.15s ease-in-out;
+      }
+    }
+  }
+  
+  // Estados activos para touch
+  &:active {
+    --color: #007bff;
+    transform: scale(0.95);
+    transition: transform 0.1s ease-in-out;
+  }
+}
+
+// Iconos en tabs responsivos
+ion-tab-button ion-icon {
+  font-size: 20px;
+  margin-bottom: 2px;
+  
+  @media (max-width: 576px) {
+    font-size: 18px;
+    margin-bottom: 1px;
+  }
+  
+  @media (min-width: 768px) {
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
+  
+  // Transiciones suaves
+  transition: all 0.2s ease-in-out;
+}
+
+// Labels en tabs responsivos
+ion-tab-button ion-label {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-top: 2px;
+  
+  @media (max-width: 576px) {
+    font-size: 10px;
+    margin-top: 1px;
+  }
+  
+  @media (max-width: 375px) {
+    // Para iPhone SE y pantallas muy pequeñas
+    font-size: 9px;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 60px;
+  }
+  
+  @media (min-width: 768px) {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  
+  @media (min-width: 1024px) {
+    font-size: 13px;
+  }
+}
+
+// Badges en tabs (para notificaciones)
+ion-tab-button ion-badge {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  min-width: 16px;
+  height: 16px;
+  font-size: 9px;
+  line-height: 16px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: #dc3545;
+  color: white;
+  
+  @media (max-width: 576px) {
+    top: 2px;
+    right: 6px;
+    min-width: 14px;
+    height: 14px;
+    font-size: 8px;
+    line-height: 14px;
+    padding: 0 3px;
+    border-radius: 7px;
+  }
+  
+  @media (min-width: 768px) {
+    top: 6px;
+    right: 12px;
+    min-width: 18px;
+    height: 18px;
+    font-size: 10px;
+    line-height: 18px;
+    padding: 0 5px;
+    border-radius: 9px;
+  }
+}
+
+// Modo oscuro
+@media (prefers-color-scheme: dark) {
+  ion-tab-bar {
+    --background: #1a1a1a;
+    --border: 1px solid #333333;
+    --color: #8c8c8c;
+    --color-selected: #4dabf7;
+  }
+  
+  ion-tab-button {
+    &.tab-selected {
+      --color: #4dabf7;
+    }
+    
+    @media (hover: hover) {
+      &:hover:not(.tab-selected) {
+        --color: #e0e0e0;
+      }
+    }
+  }
+}
+
+// Orientación landscape en móviles
+@media (max-width: 768px) and (orientation: landscape) {
+  ion-tab-bar {
+    height: 48px;
+    
+    @supports (padding: max(0px)) {
+      padding-bottom: max(4px, env(safe-area-inset-bottom));
+    }
+  }
+  
+  ion-tab-button {
+    --padding-top: 4px;
+    --padding-bottom: 4px;
+    
+    ion-icon {
+      font-size: 16px;
+      margin-bottom: 0;
+    }
+    
+    ion-label {
+      font-size: 9px;
+      margin-top: 0;
+    }
+  }
+}
+
+// Animaciones
+@media (prefers-reduced-motion: no-preference) {
+  ion-tab-button {
+    transition: all 0.2s ease-in-out;
+    
+    ion-icon,
+    ion-label {
+      transition: all 0.2s ease-in-out;
+    }
+    
+    &.tab-selected {
+      ion-icon {
+        animation: tabSelected 0.3s ease-out;
+      }
+    }
+  }
+}
+
+@keyframes tabSelected {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+// Accesibilidad mejorada
+ion-tab-button {
+  // Mejorar contraste para accesibilidad
+  &:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+  }
+  
+  // Asegurar área de toque mínima
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+  }
+}
+
+// Para dispositivos con touch
+@media (pointer: coarse) {
+  ion-tab-button {
+    min-height: 48px;
+    min-width: 48px;
+    
+    &::before {
+      width: 48px;
+      height: 48px;
+    }
+  }
+}
+
+// Soporte para notch y safe areas
+@supports (padding: max(0px)) {
+  ion-tabs {
+    ion-tab-bar[slot="bottom"] {
+      padding-bottom: max(8px, env(safe-area-inset-bottom));
+    }
+  }
+}
+
+// Ripple effect personalizado para tabs
+ion-tab-button {
+  --ripple-color: rgba(0, 123, 255, 0.2);
+  
+  &.tab-selected {
+    --ripple-color: rgba(0, 123, 255, 0.3);
+  }
+}
